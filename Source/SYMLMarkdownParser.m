@@ -70,11 +70,23 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	return parseState;
 }
 
+
 SYMLMarkdownParserState SYMLTodoistMarkdownParserState() {
 	SYMLMarkdownParserState parseState = SYMLDefaultMarkdownParserState();
 	
+	// Todoist specific
 	parseState.shouldParseDoubleExclamationMarksAsStrong = TRUE;
 	parseState.shouldParseTodoistStyleLinks = TRUE;
+	
+	// Avoid parsing HTML elements
+	parseState.shouldParseHTMLTags = FALSE;
+
+	return parseState;
+}
+
+
+SYMLMarkdownParserState SYMLTodoistInlineMarkdownParserState() {
+	SYMLMarkdownParserState parseState = SYMLTodoistMarkdownParserState();
 	
 	// Disable parsing of block elements
 	parseState.shouldParseHeadings = FALSE;
@@ -85,7 +97,6 @@ SYMLMarkdownParserState SYMLTodoistMarkdownParserState() {
 	
 	// And of inline code elements
 	parseState.shouldParseInlineCode = FALSE;
-	parseState.shouldParseHTMLTags = FALSE;
 
 	return parseState;
 }

@@ -202,6 +202,8 @@
 				4A0B910D191ECF4B0069ACD0 /* README.md */,
 				4A0B911B191EF5C50069ACD0 /* MPEAppDelegate.h */,
 				4A0B911C191EF5C50069ACD0 /* MPEAppDelegate.m */,
+				4A196AD61C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.h */,
+				4A196AD71C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.m */,
 				4AA46900191CF6F10035E5E8 /* Supporting Files */,
 			);
 			name = "Example App";
@@ -251,8 +253,6 @@
 				4AA46932191CF7280035E5E8 /* SYMLMarkdownParser.m */,
 				4A0B90FE191D13740069ACD0 /* SYMLMarkdownParser-Internals.h */,
 				4AA46933191CF7280035E5E8 /* SYMLMarkdownParserAttributes.h */,
-				4A196AD61C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.h */,
-				4A196AD71C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.m */,
 				4A0B90F6191D003F0069ACD0 /* Content */,
 				4A0B90EC191CFE840069ACD0 /* Categories & Functions */,
 			);

@@ -148,6 +148,7 @@
 	SYMLMarkdownParserState parseState = SYMLTodoistMarkdownParserState();
 	
 	// Set any custom parser options here
+	parseState.shouldParseInlineCode = TRUE;
 	
 	SYMLParseMarkdown(inputString, attributesCollection, parseState, self);
 	

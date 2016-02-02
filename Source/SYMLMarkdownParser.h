@@ -38,6 +38,10 @@ struct SYMLMarkdownParserState {
 	BOOL shouldParseEmphasisAndStrongTags;
 	BOOL shouldParseHTMLTags;
 	
+	// Existing Todoist elements
+	BOOL shouldParseDoubleExclamationMarksAsStrong;
+	BOOL shouldParseTodoistStyleLinks;
+	
 	// Used internally to keep track of the parsing
 	NSInteger textLength;
 	NSRange searchRange;
@@ -65,6 +69,8 @@ typedef struct SYMLMarkdownParserState SYMLMarkdownParserState;
 
 
 SYMLMarkdownParserState SYMLDefaultMarkdownParserState();
+SYMLMarkdownParserState SYMLTodoistMarkdownParserState();
+
 BOOL SYMLMarkdownParserStateInitialConditionsAreEqual(SYMLMarkdownParserState firstState, SYMLMarkdownParserState secondState);
 
 // Returns the state after parsing has completed

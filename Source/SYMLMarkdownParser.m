@@ -69,6 +69,15 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	return parseState;
 }
 
+SYMLMarkdownParserState SYMLTodoistMarkdownParserState() {
+	SYMLMarkdownParserState parseState = SYMLDefaultMarkdownParserState();
+	
+	parseState.shouldParseDoubleExclamationMarksAsStrong = TRUE;
+	parseState.shouldParseTodoistStyleLinks = TRUE;
+	
+	return parseState;
+}
+
 
 BOOL SYMLMarkdownParserStateInitialConditionsAreEqual(SYMLMarkdownParserState firstState, SYMLMarkdownParserState secondState)
 {
@@ -86,8 +95,13 @@ BOOL SYMLMarkdownParserStateInitialConditionsAreEqual(SYMLMarkdownParserState fi
 					firstState.shouldParseLinks == secondState.shouldParseLinks &&
 					firstState.shouldParseEmphasisAndStrongTags == secondState.shouldParseEmphasisAndStrongTags &&
 					firstState.shouldParseHTMLTags == secondState.shouldParseHTMLTags &&
-					
-					firstState.previousLineType == secondState.previousLineType;
+	
+					firstState.previousLineType == secondState.previousLineType &&
+	
+					// Compare Todoist specific syntax flags
+					firstState.shouldParseDoubleExclamationMarksAsStrong == secondState.shouldParseDoubleExclamationMarksAsStrong &&
+					firstState.shouldParseTodoistStyleLinks == secondState.shouldParseTodoistStyleLinks;
+
 	
 	return isEqual;
 }
@@ -564,10 +578,11 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 		
 		// Parse emphasis and strong elements
 		if(parseState.shouldParseEmphasisAndStrongTags) {
-			if(currentCharacter == '*' || currentCharacter == '_') {
-				
+			BOOL exclamationsEnabled = parseState.shouldParseDoubleExclamationMarksAsStrong;
+			
+			if(currentCharacter == '*' || currentCharacter == '_' || (exclamationsEnabled && currentCharacter == '!')) {
 				if(inlineState.precedingCharacter == currentCharacter) {
-					// If the previous character was also a second * or _
+					// If the previous character was also a second *, _ or !
 					// upgrade from an emphasis element to a strong element
 					
 					if(inlineState.strong.location == NSNotFound) {
@@ -586,8 +601,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					// If there are two trailing ** or __ then don't match as an emphasis tag
 					inlineState.emphasis.length = 0;
 					
-				} else if(inlineState.emphasis.location == NSNotFound) {
-					
+				} else if(inlineState.emphasis.location == NSNotFound && currentCharacter != '!') {
 					// Detect the start of a potential emphasis element
 					if(!inlineState.precedingCharacter || precedingCharacterIsWhitespace) {
 						inlineState.emphasis.location = characterIndex;

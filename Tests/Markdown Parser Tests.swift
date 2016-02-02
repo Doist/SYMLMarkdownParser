@@ -47,16 +47,16 @@ class Markdown_Parser_Tests: XCTestCase {
 	}
 	
 	func testParsingHTML() {
-		let initialState = SYMLDefaultMarkdownParserState()
-		let text = exampleText();
-		let collection = SYMLTextElementsCollection(string: text)
-		var elementCollection : SYMLAttributedObjectCollection? = collection
-
-		let outputState = SYMLParseMarkdown(text, &elementCollection, initialState, nil)
-		
-		for element in collection.allElements() {
-			
-		}
+//		let initialState = SYMLDefaultMarkdownParserState()
+//		let text = exampleText();
+//		let collection = SYMLTextElementsCollection(string: text)
+//		var elementCollection : SYMLAttributedObjectCollection? = collection
+//
+//		let outputState = SYMLParseMarkdown(text, &elementCollection, initialState, nil)
+//		
+//		for element in collection.allElements() {
+//			
+//		}
 	}
 	
 	

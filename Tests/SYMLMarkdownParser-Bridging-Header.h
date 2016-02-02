@@ -13,3 +13,5 @@
 #import "SYMLTextElementsCollection.h"
 #import "SYMLAttributedObjectCollection.h"
 #import "NSMutableAttributedString+RangeForAttributedString.h"
+
+#import "TestAttributesCollection.h"

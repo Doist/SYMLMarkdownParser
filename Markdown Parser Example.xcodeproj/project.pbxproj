@@ -17,8 +17,9 @@
 		4A0B911E191EF5C50069ACD0 /* MPEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B911C191EF5C50069ACD0 /* MPEAppDelegate.m */; };
 		4A0B9120191EF5CF0069ACD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B911F191EF5CF0069ACD0 /* main.m */; };
 		4A0B912D191EF64E0069ACD0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A0B912B191EF64E0069ACD0 /* MainMenu.xib */; };
+		4A0F84071C60CDAE00EB27A9 /* TestAttributesCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F84061C60CDAE00EB27A9 /* TestAttributesCollection.m */; };
+		4A17509B1C60C8A500DB85CD /* Additional Todoist Syntax Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17509A1C60C8A500DB85CD /* Additional Todoist Syntax Tests.swift */; };
 		4A196AD81C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A196AD71C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.m */; };
-		4A196ADC1C5FEA6800BB438C /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A196ADB1C5FEA6800BB438C /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4A65E1BB1A43D83400B41D57 /* specs.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A65E1BA1A43D83400B41D57 /* specs.json */; };
 		4AA468FA191CF6F10035E5E8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA468F9191CF6F10035E5E8 /* Cocoa.framework */; };
 		4AA46919191CF6F10035E5E8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AA46918191CF6F10035E5E8 /* XCTest.framework */; };
@@ -26,6 +27,7 @@
 		4AA46938191CF7280035E5E8 /* NSMutableAttributedString+RangeForAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA4692F191CF7280035E5E8 /* NSMutableAttributedString+RangeForAttributedString.m */; };
 		4AA46939191CF7280035E5E8 /* SYMLMarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA46932191CF7280035E5E8 /* SYMLMarkdownParser.m */; };
 		4AC819F61A43CCBB0019AD05 /* Markdown Parser Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC819F51A43CCBB0019AD05 /* Markdown Parser Tests.swift */; };
+		EE423FCE1D9D9788A53CD2CF /* libPods-Markdown Parser Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F43449D9AE0005B37357C0 /* libPods-Markdown Parser Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11C4B7E702341A88702A5A4C /* Pods-Markdown Parser Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Markdown Parser Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Markdown Parser Example/Pods-Markdown Parser Example.debug.xcconfig"; sourceTree = "<group>"; };
+		439BC6DAA5D80E820C52FC65 /* Pods-Markdown Parser Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Markdown Parser Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Markdown Parser Example/Pods-Markdown Parser Example.release.xcconfig"; sourceTree = "<group>"; };
 		4A0B90E9191CFE7E0069ACD0 /* NSString+SubstringWithUntestedRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SubstringWithUntestedRange.h"; sourceTree = "<group>"; };
 		4A0B90EA191CFE7E0069ACD0 /* NSString+SubstringWithUntestedRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SubstringWithUntestedRange.m"; sourceTree = "<group>"; };
 		4A0B90ED191CFFAC0069ACD0 /* SYMLTextElementsCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMLTextElementsCollection.h; sourceTree = "<group>"; };
@@ -59,10 +63,11 @@
 		4A0B9122191EF5FA0069ACD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Example Mac App/Base.lproj/MainMenu.xib"; sourceTree = SOURCE_ROOT; };
 		4A0B912C191EF64E0069ACD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Example Mac App/Base.lproj/MainMenu.xib"; sourceTree = SOURCE_ROOT; };
 		4A0B912E191EF6920069ACD0 /* Markdown Parser Example-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Markdown Parser Example-Prefix.pch"; path = "Example Mac App/Markdown Parser Example-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		4A0F84051C60CDAE00EB27A9 /* TestAttributesCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestAttributesCollection.h; path = Tests/TestAttributesCollection.h; sourceTree = SOURCE_ROOT; };
+		4A0F84061C60CDAE00EB27A9 /* TestAttributesCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestAttributesCollection.m; path = Tests/TestAttributesCollection.m; sourceTree = SOURCE_ROOT; };
+		4A17509A1C60C8A500DB85CD /* Additional Todoist Syntax Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Additional Todoist Syntax Tests.swift"; path = "Tests/Additional Todoist Syntax Tests.swift"; sourceTree = SOURCE_ROOT; };
 		4A196AD61C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SYMLMarkdownTextFormatter-Mac.h"; path = "Example Mac App/SYMLMarkdownTextFormatter-Mac.h"; sourceTree = SOURCE_ROOT; };
 		4A196AD71C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SYMLMarkdownTextFormatter-Mac.m"; path = "Example Mac App/SYMLMarkdownTextFormatter-Mac.m"; sourceTree = SOURCE_ROOT; };
-		4A196ADA1C5FEA6800BB438C /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = RegexKitLite/RegexKitLite/RegexKitLite.h; sourceTree = SOURCE_ROOT; };
-		4A196ADB1C5FEA6800BB438C /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = RegexKitLite/RegexKitLite/RegexKitLite.m; sourceTree = SOURCE_ROOT; };
 		4A196ADD1C5FEB2600BB438C /* SYMLMarkdownParser-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SYMLMarkdownParser-Bridging-Header.h"; path = "Tests/SYMLMarkdownParser-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		4A65E1BA1A43D83400B41D57 /* specs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = specs.json; path = Tests/specs.json; sourceTree = SOURCE_ROOT; };
 		4AA468F6191CF6F10035E5E8 /* Markdown Parser Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Markdown Parser Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +84,7 @@
 		4AA46932191CF7280035E5E8 /* SYMLMarkdownParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYMLMarkdownParser.m; sourceTree = "<group>"; };
 		4AA46933191CF7280035E5E8 /* SYMLMarkdownParserAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMLMarkdownParserAttributes.h; sourceTree = "<group>"; };
 		4AC819F51A43CCBB0019AD05 /* Markdown Parser Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Markdown Parser Tests.swift"; path = "Tests/Markdown Parser Tests.swift"; sourceTree = SOURCE_ROOT; };
+		84F43449D9AE0005B37357C0 /* libPods-Markdown Parser Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Markdown Parser Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,7 @@
 			files = (
 				4A0B90FB191D01650069ACD0 /* libicucore.dylib in Frameworks */,
 				4AA468FA191CF6F10035E5E8 /* Cocoa.framework in Frameworks */,
+				EE423FCE1D9D9788A53CD2CF /* libPods-Markdown Parser Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +110,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09D42DD57F93E822C4C83C44 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				11C4B7E702341A88702A5A4C /* Pods-Markdown Parser Example.debug.xcconfig */,
+				439BC6DAA5D80E820C52FC65 /* Pods-Markdown Parser Example.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		4A0B90EC191CFE840069ACD0 /* Categories & Functions */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,9 +159,9 @@
 				4AA4692D191CF7280035E5E8 /* Markdown Parser Code */,
 				4AA468FF191CF6F10035E5E8 /* Example App */,
 				4AA4691D191CF6F10035E5E8 /* Tests */,
-				4AA4693E191CFD1A0035E5E8 /* Other Peoples Code */,
 				4AA468F8191CF6F10035E5E8 /* Frameworks */,
 				4AA468F7191CF6F10035E5E8 /* Products */,
+				09D42DD57F93E822C4C83C44 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -165,6 +181,7 @@
 				4AA46918191CF6F10035E5E8 /* XCTest.framework */,
 				4A0B90FA191D01650069ACD0 /* libicucore.dylib */,
 				4AA468FB191CF6F10035E5E8 /* Other Frameworks */,
+				84F43449D9AE0005B37357C0 /* libPods-Markdown Parser Example.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -207,6 +224,9 @@
 			children = (
 				4A196ADD1C5FEB2600BB438C /* SYMLMarkdownParser-Bridging-Header.h */,
 				4AC819F51A43CCBB0019AD05 /* Markdown Parser Tests.swift */,
+				4A17509A1C60C8A500DB85CD /* Additional Todoist Syntax Tests.swift */,
+				4A0F84051C60CDAE00EB27A9 /* TestAttributesCollection.h */,
+				4A0F84061C60CDAE00EB27A9 /* TestAttributesCollection.m */,
 				4A65E1BA1A43D83400B41D57 /* specs.json */,
 				4AA4691E191CF6F10035E5E8 /* Supporting Files */,
 			);
@@ -240,16 +260,6 @@
 			path = Source;
 			sourceTree = SOURCE_ROOT;
 		};
-		4AA4693E191CFD1A0035E5E8 /* Other Peoples Code */ = {
-			isa = PBXGroup;
-			children = (
-				4A196ADA1C5FEA6800BB438C /* RegexKitLite.h */,
-				4A196ADB1C5FEA6800BB438C /* RegexKitLite.m */,
-			);
-			name = "Other Peoples Code";
-			path = "Markdown Parser ExampleTests";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -257,9 +267,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AA46927191CF6F10035E5E8 /* Build configuration list for PBXNativeTarget "Markdown Parser Example" */;
 			buildPhases = (
+				63D10EEB5755EC90B913CA97 /* Check Pods Manifest.lock */,
 				4AA468F2191CF6F10035E5E8 /* Sources */,
 				4AA468F3191CF6F10035E5E8 /* Frameworks */,
 				4AA468F4191CF6F10035E5E8 /* Resources */,
+				93FC53CC83DF23B7F84AFDE6 /* Embed Pods Frameworks */,
+				F3566EC28C97D5A6DB25E704 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -345,6 +358,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		63D10EEB5755EC90B913CA97 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		93FC53CC83DF23B7F84AFDE6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Markdown Parser Example/Pods-Markdown Parser Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3566EC28C97D5A6DB25E704 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Markdown Parser Example/Pods-Markdown Parser Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4AA468F2191CF6F10035E5E8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -352,7 +413,6 @@
 			files = (
 				4A0B9120191EF5CF0069ACD0 /* main.m in Sources */,
 				4A0B911E191EF5C50069ACD0 /* MPEAppDelegate.m in Sources */,
-				4A196ADC1C5FEA6800BB438C /* RegexKitLite.m in Sources */,
 				4A0B90F9191D00C10069ACD0 /* SYMLRangeFunctions.m in Sources */,
 				4A0B90EF191CFFAC0069ACD0 /* SYMLTextElementsCollection.m in Sources */,
 				4A196AD81C5FE9EB00BB438C /* SYMLMarkdownTextFormatter-Mac.m in Sources */,
@@ -367,6 +427,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0F84071C60CDAE00EB27A9 /* TestAttributesCollection.m in Sources */,
+				4A17509B1C60C8A500DB85CD /* Additional Todoist Syntax Tests.swift in Sources */,
 				4AC819F61A43CCBB0019AD05 /* Markdown Parser Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +543,7 @@
 		};
 		4AA46928191CF6F10035E5E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11C4B7E702341A88702A5A4C /* Pods-Markdown Parser Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -494,6 +557,7 @@
 		};
 		4AA46929191CF6F10035E5E8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 439BC6DAA5D80E820C52FC65 /* Pods-Markdown Parser Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;

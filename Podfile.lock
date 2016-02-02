@@ -1,0 +1,10 @@
+PODS:
+  - RegexKitLite (4.0.6)
+
+DEPENDENCIES:
+  - RegexKitLite (~> 4.0.6)
+
+SPEC CHECKSUMS:
+  RegexKitLite: dc597a3e558a805e20cc574956aaae2c5411020b
+
+COCOAPODS: 0.39.0

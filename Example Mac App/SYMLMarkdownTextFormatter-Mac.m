@@ -139,7 +139,7 @@
 		return FALSE;
 	
 	
-	SYMLMarkdownParserState parseState = SYMLDefaultMarkdownParserState();
+	SYMLMarkdownParserState parseState = SYMLTodoistMarkdownParserState();
 	
 	// Set any custom parser options here
 	

@@ -10,6 +10,7 @@ import Cocoa
 import XCTest
 
 
+
 class Markdown_Parser_Tests: XCTestCase {
 	
 	func exampleText() -> String {
@@ -23,11 +24,12 @@ class Markdown_Parser_Tests: XCTestCase {
         // This is an example of a functional test case.
 		// Parsing without any input
 		let initialParseState = SYMLDefaultMarkdownParserState()
-		let resultingState = SYMLParseMarkdown(nil, nil, initialParseState, nil);
+		SYMLParseMarkdown(nil, nil, initialParseState, nil);
 		
 		// Test without an attributed collection to parse into
 		SYMLParseMarkdown(exampleText(), nil, initialParseState, nil);
     }
+	
 	
 	func testParsingIntoAnAttributedString() {
 		let initialState = SYMLDefaultMarkdownParserState()
@@ -46,18 +48,23 @@ class Markdown_Parser_Tests: XCTestCase {
 		}
 	}
 	
-	func testParsingHTML() {
-//		let initialState = SYMLDefaultMarkdownParserState()
-//		let text = exampleText();
-//		let collection = SYMLTextElementsCollection(string: text)
-//		var elementCollection : SYMLAttributedObjectCollection? = collection
-//
-//		let outputState = SYMLParseMarkdown(text, &elementCollection, initialState, nil)
-//		
-//		for element in collection.allElements() {
-//			
-//		}
+	
+	func testEmphasisCodeElements() {
+		let parserConfiguration = SYMLDefaultMarkdownParserState()
+		let text = "some *emphasised text* demarked by *single asterixes*";
+		
+		XCTAssertEqual(numberOfElementsOfType("emphasis", text, parserConfiguration), 2, "Test that both inline code elements are matched")
 	}
+	
+	
+	func testInlineCodeElements() {
+		let parserConfiguration = SYMLDefaultMarkdownParserState()
+		let text = "some `code` demarked by `back ticks` as";
+		
+		XCTAssertEqual(numberOfElementsOfType("inlineCode", text, parserConfiguration), 2, "Test that both inline code elements are matched")
+	}
+
+
 	
 	
 //	func testConformanceToCommonMark() {
@@ -88,38 +95,9 @@ class Markdown_Parser_Tests: XCTestCase {
 		return false
 	}
 
-
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measureBlock() {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
-
-	func test_detectMarkdownElements() {
-		let initialState = SYMLDefaultMarkdownParserState()
-		let text = exampleText();
-		let collection = SYMLTestTextElementsCollection(string: text)
-//		collection.addedElementBlock {
-//			
-//		}
-		
-		var elementCollection : SYMLAttributedObjectCollection? = collection
-		SYMLParseMarkdown(text, &elementCollection, initialState, nil);
-//		print("elementCollection: \( )")
-		
-	}
-	
 }
 
 
-class SYMLTestTextElementsCollection: SYMLTextElementsCollection {
-//
-//	override func markSectionAsElement(elementKey: String!, withContent content: AnyObject!, range: NSRange) {
-//		super.
-//	}
-//	
-}
 
 
 extension String {
@@ -128,4 +106,27 @@ extension String {
 		return NSMakeRange(0, (self as NSString).length)
 	}
 	
+}
+
+
+func numberOfElementsOfType(elementKey: String, _ text: String, _ parserConfiguration: SYMLMarkdownParserState) -> Int {
+	let attributedString = NSMutableAttributedString(string: text)
+	var elementCollection: SYMLAttributedObjectCollection? = attributedString
+	
+	SYMLParseMarkdown(text, &elementCollection, parserConfiguration, TestAttributesCollection());
+	var numberOfElements: Int = 0
+	
+	attributedString.enumerateAttribute(TestElementKey, inRange: text.range, options: []) { (element, range, stop) in
+		if let element = element as? String {
+			switch element {
+				case elementKey:
+					numberOfElements += 1
+				
+				default:
+					break
+			}
+		}
+	}
+	
+	return numberOfElements
 }

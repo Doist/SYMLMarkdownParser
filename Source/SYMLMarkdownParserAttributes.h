@@ -37,6 +37,6 @@ extern NSString * const SYMLTextEmailElement;
 
 @protocol SYMLMarkdownParserAttributes <NSObject>
 @optional
-@property (readonly) NSDictionary *headingAttributes, *horizontalRuleAttributes, *blockquoteAttributes, *listElementAttributes, *listLineAttributes, *emphasisAttributes, *strongAttributes, *linkAttributes, *linkTitleAttributes, *linkTagAttributes, *invalidLinkAttributes, *urlAttributes;
+@property (readonly) NSDictionary *headingAttributes, *horizontalRuleAttributes, *blockquoteAttributes, *listElementAttributes, *listLineAttributes, *emphasisAttributes, *strongAttributes, *inlineCodeAttributes, *linkAttributes, *linkTitleAttributes, *linkTagAttributes, *invalidLinkAttributes, *urlAttributes;
 
 @end

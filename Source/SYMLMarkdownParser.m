@@ -64,6 +64,7 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	// Inline elements
 	parseState.shouldParseLinks = TRUE;
 	parseState.shouldParseEmphasisAndStrongTags = TRUE;
+	parseState.shouldParseInlineCode = TRUE;
 	parseState.shouldParseHTMLTags = TRUE;
 	
 	return parseState;
@@ -75,6 +76,17 @@ SYMLMarkdownParserState SYMLTodoistMarkdownParserState() {
 	parseState.shouldParseDoubleExclamationMarksAsStrong = TRUE;
 	parseState.shouldParseTodoistStyleLinks = TRUE;
 	
+	// Disable parsing of block elements
+	parseState.shouldParseHeadings = FALSE;
+	parseState.shouldParseBlockquotes = FALSE;
+	parseState.shouldParseBlockcode = FALSE;
+	parseState.shouldParseHorizontalRule = FALSE;
+	parseState.shouldParseLists = FALSE;
+	
+	// And of inline code elements
+	parseState.shouldParseInlineCode = FALSE;
+	parseState.shouldParseHTMLTags = FALSE;
+
 	return parseState;
 }
 
@@ -119,6 +131,7 @@ SYMLMarkdownParserInlineState SYMLInitialParserInlineState()
 	
 	inlineState.emphasis = notFoundRange;
 	inlineState.strong = notFoundRange;
+	inlineState.inlineCode = notFoundRange;
 	inlineState.htmlElement = notFoundRange;
 	
 	inlineState.precedingCharacter = 0;
@@ -155,6 +168,7 @@ SYMLMarkdownParserState SYMLParseMarkdown(NSString *inputString,
 	parseState.hasListLineAttributes = [attributes respondsToSelector:@selector(listLineAttributes)];
 	parseState.hasEmphasisAttributes = [attributes respondsToSelector:@selector(emphasisAttributes)];
 	parseState.hasStrongAttributes = [attributes respondsToSelector:@selector(strongAttributes)];
+	parseState.hasInlineCodeAttributes = [attributes respondsToSelector:@selector(inlineCodeAttributes)];
 	parseState.hasLinkAttributes = [attributes respondsToSelector:@selector(linkAttributes)];
 	parseState.hasLinkTitleAttributes = [attributes respondsToSelector:@selector(linkTitleAttributes)];
 	parseState.hasLinkTagAttributes = [attributes respondsToSelector:@selector(linkTagAttributes)];
@@ -632,6 +646,17 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 		}
 		
 		
+		// Parse inline code elements
+		if(parseState.shouldParseInlineCode) {
+			if(inlineState.inlineCode.location == NSNotFound && currentCharacter == '`') {
+				inlineState.inlineCode.location = characterIndex;
+			} else if(inlineState.inlineCode.location != NSNotFound && currentCharacter == '`') {
+				inlineState.inlineCode.length = characterIndex + 1 - inlineState.inlineCode.location;
+				commitAppearance = TRUE;
+			}
+		}
+		
+		
 		// Parse html style tags
 		if(parseState.shouldParseHTMLTags) {
 			if(inlineState.htmlElement.location == NSNotFound && currentCharacter == '<') {
@@ -780,7 +805,13 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				
 				inlineState.emphasis = NSMakeRange(NSNotFound, 0);
 				inlineState.emphasisCharacter = 0;
-			} else if(inlineState.htmlElement.length) {
+			} else if(inlineState.inlineCode.location != NSNotFound && inlineState.inlineCode.length) {
+				if(parseState.hasInlineCodeAttributes) {
+					[*outResult addAttributes:[attributes inlineCodeAttributes] range:inlineState.inlineCode];
+				}
+				
+				inlineState.inlineCode = NSMakeRange(NSNotFound, 0);
+			 } else if(inlineState.htmlElement.length) {
 				
 				// Style html elements
 				if(parseState.hasEmphasisAttributes) {

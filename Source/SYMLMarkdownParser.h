@@ -36,6 +36,7 @@ struct SYMLMarkdownParserState {
 	// Inline elements
 	BOOL shouldParseLinks;
 	BOOL shouldParseEmphasisAndStrongTags;
+	BOOL shouldParseInlineCode;
 	BOOL shouldParseHTMLTags;
 	
 	// Existing Todoist elements
@@ -55,6 +56,7 @@ struct SYMLMarkdownParserState {
 	BOOL hasListLineAttributes;
 	BOOL hasEmphasisAttributes;
 	BOOL hasStrongAttributes;
+	BOOL hasInlineCodeAttributes;
 	BOOL hasLinkAttributes;
 	BOOL hasLinkTitleAttributes;
 	BOOL hasLinkTagAttributes;

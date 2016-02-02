@@ -20,6 +20,6 @@
 - (SYMLTextElementsCollection *)elementsFromString:(NSString *)inputString;
 
 
-@property (strong, readonly) NSDictionary *baseAttributes, *emphasisAttributes, *strongAttributes, *linkAttributes, *urlAttributes, *headingAttributes, *horizontalRuleAttributes, *blockquoteAttributes, *listAttributes;
+@property (strong, readonly) NSDictionary *baseAttributes, *emphasisAttributes, *strongAttributes, *inlineCodeAttributes, *linkAttributes, *urlAttributes, *headingAttributes, *horizontalRuleAttributes, *blockquoteAttributes, *listAttributes;
 
 @end

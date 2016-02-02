@@ -310,7 +310,7 @@
 				CLASSPREFIX = MPE;
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Harry Jordan";
 				TargetAttributes = {
 					4AA46916191CF6F10035E5E8 = {
@@ -488,6 +488,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -550,6 +551,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example Mac App/Markdown Parser Example-Prefix.pch";
 				INFOPLIST_FILE = "Example Mac App/Markdown Parser Example-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "Inquisitive-Software.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -564,6 +566,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example Mac App/Markdown Parser Example-Prefix.pch";
 				INFOPLIST_FILE = "Example Mac App/Markdown Parser Example-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "Inquisitive-Software.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -587,6 +590,7 @@
 				);
 				INFOPLIST_FILE = "Tests/Markdown Parser ExampleTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Inquisitive-Software.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Tests/SYMLMarkdownParser-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -609,6 +613,7 @@
 				GCC_PREFIX_HEADER = "Example Mac App/Markdown Parser Example-Prefix.pch";
 				INFOPLIST_FILE = "Tests/Markdown Parser ExampleTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Inquisitive-Software.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_DIR/Tests/SYMLMarkdownParser-Bridging-Header.h";
 				TEST_HOST = "$(BUNDLE_LOADER)";

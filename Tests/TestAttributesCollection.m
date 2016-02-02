@@ -21,47 +21,51 @@ NSString * const TestElementKey = @"element";
 
 
 - (NSDictionary *)horizontalRuleAttributes {
-	return @{ TestElementKey : @"horizontalRuleAttributes" };
+	return @{ TestElementKey : @"horizontalRule" };
 }
 
 - (NSDictionary *)blockquoteAttributes {
-	return @{ TestElementKey : @"blockquoteAttributes" };
+	return @{ TestElementKey : @"blockquote" };
 }
 
 - (NSDictionary *)listElementAttributes {
-	return @{ TestElementKey : @"listElementAttributes" };
+	return @{ TestElementKey : @"listElement" };
 }
 
 - (NSDictionary *)listLineAttributes {
-	return @{ TestElementKey : @"listLineAttributes" };
+	return @{ TestElementKey : @"listLine" };
 }
 
 - (NSDictionary *)emphasisAttributes {
-	return @{ TestElementKey : @"emphasisAttributes" };
+	return @{ TestElementKey : @"emphasis" };
 }
 
 - (NSDictionary *)strongAttributes {
-	return @{ TestElementKey : @"strongAttributes" };
+	return @{ TestElementKey : @"strong" };
+}
+
+- (NSDictionary *)inlineCodeAttributes {
+	return @{ TestElementKey : @"inlineCode" };
 }
 
 - (NSDictionary *)linkAttributes {
-	return @{ TestElementKey : @"linkAttributes" };
+	return @{ TestElementKey : @"link" };
 }
 
 - (NSDictionary *)linkTitleAttributes {
-	return @{ TestElementKey : @"linkTitleAttributes" };
+	return @{ TestElementKey : @"linkTitle" };
 }
 
 - (NSDictionary *)linkTagAttributes {
-	return @{ TestElementKey : @"linkTagAttributes" };
+	return @{ TestElementKey : @"linkTag" };
 }
 
 - (NSDictionary *)invalidLinkAttributes {
-	return @{ TestElementKey : @"invalidLinkAttributes" };
+	return @{ TestElementKey : @"invalidLink" };
 }
 
 - (NSDictionary *)urlAttributes {
-	return @{ TestElementKey : @"urlAttributes" };
+	return @{ TestElementKey : @"url" };
 }
 
 @end

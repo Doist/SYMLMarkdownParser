@@ -89,6 +89,12 @@
 			NSFontAttributeName							: boldFont,
 			NSForegroundColorAttributeName				: [NSColor colorWithCalibratedRed:0.227 green:0.381 blue:0.063 alpha:1.0]
 		};
+		
+		_inlineCodeAttributes = @{
+			NSFontAttributeName							: boldFont,
+			NSForegroundColorAttributeName				: [NSColor colorWithCalibratedRed:0.227 green:0.321 blue:0.043 alpha:1.0]
+		};
+
 	}
 	
 	return self;

@@ -71,7 +71,7 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 }
 
 
-SYMLMarkdownParserState SYMLTodoistMarkdownParserState() {
+SYMLMarkdownParserState TodoistBlockElementsMarkdownParserState() {
 	SYMLMarkdownParserState parseState = SYMLDefaultMarkdownParserState();
 	
 	// Todoist specific
@@ -85,8 +85,8 @@ SYMLMarkdownParserState SYMLTodoistMarkdownParserState() {
 }
 
 
-SYMLMarkdownParserState SYMLTodoistInlineMarkdownParserState() {
-	SYMLMarkdownParserState parseState = SYMLTodoistMarkdownParserState();
+SYMLMarkdownParserState TodoistInlineMarkdownParserState() {
+	SYMLMarkdownParserState parseState = TodoistBlockElementsMarkdownParserState();
 	
 	// Disable parsing of block elements
 	parseState.shouldParseHeadings = FALSE;

@@ -72,8 +72,8 @@ typedef struct SYMLMarkdownParserState SYMLMarkdownParserState;
 
 SYMLMarkdownParserState SYMLDefaultMarkdownParserState();
 
-SYMLMarkdownParserState SYMLTodoistMarkdownParserState();
-SYMLMarkdownParserState SYMLTodoistInlineMarkdownParserState();
+SYMLMarkdownParserState TodoistInlineMarkdownParserState();
+SYMLMarkdownParserState TodoistBlockElementsMarkdownParserState();
 
 BOOL SYMLMarkdownParserStateInitialConditionsAreEqual(SYMLMarkdownParserState firstState, SYMLMarkdownParserState secondState);
 

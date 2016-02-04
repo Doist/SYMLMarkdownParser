@@ -145,7 +145,7 @@
 		return FALSE;
 	
 	
-	SYMLMarkdownParserState parseState = SYMLTodoistMarkdownParserState();
+	SYMLMarkdownParserState parseState = TodoistBlockElementsMarkdownParserState();
 	
 	// Set any custom parser options here
 	parseState.shouldParseInlineCode = TRUE;

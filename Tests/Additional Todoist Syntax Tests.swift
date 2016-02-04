@@ -23,12 +23,18 @@ class TodoistSyntaxTests: XCTestCase {
 
 
 	func testDoubleExclimationMarkAsBold() {
-		let parserConfiguration = SYMLTodoistMarkdownParserState()
-		let text = "some !!bold text!! demarked by !!exclimation marks!! mixed with **bold** denoted with asterixs";
+		let parserConfiguration = TodoistInlineMarkdownParserState()
+		let input1 = "some !!bold text!! demarked by !!exclimation marks!! mixed with **bold** denoted with asterixs";
+		XCTAssertEqual(numberOfElementsOfType("strong", input1, parserConfiguration), 3, "Test both standard and Todosit style strong elements are matched")
 		
-		XCTAssertEqual(numberOfElementsOfType("strong", text, parserConfiguration), 3, "Test both standard and Todosit style emphasis elements are matched")
+		let input2 = "someetimes the !! exclimation marks !! have spaces around them";
+		XCTAssertEqual(numberOfElementsOfType("strong", input2, parserConfiguration), 1, "Test that Todosit style elements are matched when surrounded by spaces")
 	}
-	
-	
+    
+    
+    func testTodoistLinkElements() {
+//		let input = "look for Todoist link items like [gmail: http://example.com] or [outlook id:123213]";
+//		XCTAssertEqual(numberOfElementsOfType("link", input, parserConfiguration), 2, "Test that Todosit style elements are matched when surrounded by spaces")
+    }
 	
 }

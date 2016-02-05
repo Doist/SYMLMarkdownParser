@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
 	
-  s.source       = { :git => "https://github.com/Doist/SYMLMarkdownParser.git", :tag => "1.0.4" }
+  s.source       = { :git => "https://github.com/Doist/SYMLMarkdownParser.git", :tag => "1.0.4", :branch => "master" }
   s.source_files  = "Source"
 	s.framework = 'Foundation'
   s.requires_arc = true

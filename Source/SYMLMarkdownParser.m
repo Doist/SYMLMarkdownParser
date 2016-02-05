@@ -144,7 +144,8 @@ SYMLMarkdownParserInlineState SYMLInitialParserInlineState()
 	inlineState.strong = notFoundRange;
 	inlineState.inlineCode = notFoundRange;
 	inlineState.htmlElement = notFoundRange;
-	
+	inlineState.todoistBold = notFoundRange;
+    
 	inlineState.precedingCharacter = 0;
 	inlineState.characterBeforePrecedingCharacterIsWhitespace = FALSE;
 
@@ -603,8 +604,6 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 		
 		// Parse emphasis and strong elements
 		if(parseState.shouldParseEmphasisAndStrongTags) {
-			BOOL exclamationsEnabled = parseState.shouldParseDoubleExclamationMarksAsStrong;
-			
 			if(currentCharacter == '*' || currentCharacter == '_') {
 				if(inlineState.precedingCharacter == currentCharacter) {
 					// If the previous character was also a second * or _
@@ -660,7 +659,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
         if(parseState.shouldParseDoubleExclamationMarksAsStrong) {
             if(currentCharacter == '!' && inlineState.precedingCharacter == '!') {
                 if(inlineState.todoistBold.location == NSNotFound) {
-                    inlineState.todoistBold.location = characterIndex - 1;
+                    inlineState.todoistBold.location = characterIndex - 2;
                 } else {
                     // Detect the closing character of the strong element
                     inlineState.todoistBold.length = characterIndex + 1 - inlineState.todoistBold.location;

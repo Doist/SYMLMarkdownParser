@@ -31,22 +31,22 @@ class Markdown_Parser_Tests: XCTestCase {
     }
 	
 	
-	func testParsingIntoAnAttributedString() {
-		let initialState = SYMLDefaultMarkdownParserState()
-		let text = exampleText();
-		var attributedString = NSMutableAttributedString(string: text)
-		var elementCollection : SYMLAttributedObjectCollection? = attributedString
-		
-		let outputState = SYMLParseMarkdown(text, &elementCollection, initialState, nil);
-		
-		let range = text.range
-		attributedString.enumerateAttributesInRange(range, options:NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired) {
-			(attributes :[String : AnyObject], range :NSRange, stop :UnsafeMutablePointer<ObjCBool>) in
-			if(attributes.count > 0) {
-				print("Attribute: \(attributes), \(range)")
-			}
-		}
-	}
+//	func testParsingIntoAnAttributedString() {
+//		let initialState = SYMLDefaultMarkdownParserState()
+//		let text = exampleText();
+//		var attributedString = NSMutableAttributedString(string: text)
+//		var elementCollection : SYMLAttributedObjectCollection? = attributedString
+//		
+//		let outputState = SYMLParseMarkdown(text, &elementCollection, initialState, nil);
+//		
+//		let range = text.range
+//		attributedString.enumerateAttributesInRange(range, options:NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired) {
+//			(attributes :[String : AnyObject], range :NSRange, stop :UnsafeMutablePointer<ObjCBool>) in
+//			if(attributes.count > 0) {
+//				print("Attribute: \(attributes), \(range)")
+//			}
+//		}
+//	}
 	
 	
 	func testEmphasisCodeElements() {

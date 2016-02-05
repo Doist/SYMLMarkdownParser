@@ -659,7 +659,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
         if(parseState.shouldParseDoubleExclamationMarksAsStrong) {
             if(currentCharacter == '!' && inlineState.precedingCharacter == '!') {
                 if(inlineState.todoistBold.location == NSNotFound) {
-                    inlineState.todoistBold.location = characterIndex - 2;
+                    inlineState.todoistBold.location = characterIndex - 1;
                 } else {
                     // Detect the closing character of the strong element
                     inlineState.todoistBold.length = characterIndex + 1 - inlineState.todoistBold.location;

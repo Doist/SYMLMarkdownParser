@@ -26,8 +26,11 @@ class TodoistSyntaxTests: XCTestCase {
 		let parserConfiguration = TodoistInlineMarkdownParserState()
 		let input1 = "some !!bold text!! demarked by !!exclimation marks!! mixed with **bold** denoted with asterixs";
 		XCTAssertEqual(numberOfElementsOfType("strong", input1, parserConfiguration), 3, "Test both standard and Todosit style strong elements are matched")
-		
-		let input2 = "someetimes the !! exclimation marks !! have spaces around them";
+	}
+    
+	func testDoubleExclimationMarkAsBoldWithSpaces() {
+		let parserConfiguration = TodoistInlineMarkdownParserState()
+		let input2 = "sometimes the !! exclimation marks !! have spaces around them";
 		XCTAssertEqual(numberOfElementsOfType("strong", input2, parserConfiguration), 1, "Test that Todosit style elements are matched when surrounded by spaces")
 	}
     

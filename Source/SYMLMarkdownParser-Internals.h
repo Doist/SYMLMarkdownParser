@@ -25,6 +25,8 @@ struct SYMLMarkdownParserInlineState {
 	NSRange strong;
 	unichar strongCharacter;			// either * or _
 
+	NSRange todoistBold;                // !!
+    
 	NSRange inlineCode;					// either `
 	
 	NSRange htmlElement;				// <html> style tags

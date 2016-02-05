@@ -605,11 +605,10 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 		if(parseState.shouldParseEmphasisAndStrongTags) {
 			BOOL exclamationsEnabled = parseState.shouldParseDoubleExclamationMarksAsStrong;
 			
-			if(currentCharacter == '*' || currentCharacter == '_' || (exclamationsEnabled && currentCharacter == '!')) {
+			if(currentCharacter == '*' || currentCharacter == '_') {
 				if(inlineState.precedingCharacter == currentCharacter) {
-					// If the previous character was also a second *, _ or !
+					// If the previous character was also a second * or _
 					// upgrade from an emphasis element to a strong element
-					
 					if(inlineState.strong.location == NSNotFound) {
 						inlineState.strong.location = characterIndex - 1;
 						inlineState.strongCharacter = currentCharacter;
@@ -626,7 +625,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					// If there are two trailing ** or __ then don't match as an emphasis tag
 					inlineState.emphasis.length = 0;
 					
-				} else if(inlineState.emphasis.location == NSNotFound && currentCharacter != '!') {
+				} else if(inlineState.emphasis.location == NSNotFound) {
 					// Detect the start of a potential emphasis element
 					if(!inlineState.precedingCharacter || precedingCharacterIsWhitespace) {
 						inlineState.emphasis.location = characterIndex;
@@ -654,6 +653,20 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				inlineState.emphasis.length = 0;
 				inlineState.strong.length = 0;
 			}
+        }
+        
+        
+        // Parse the Todoist !! style strong elements seperately
+        if(parseState.shouldParseDoubleExclamationMarksAsStrong) {
+            if(currentCharacter == '!' && inlineState.precedingCharacter == '!') {
+                if(inlineState.todoistBold.location == NSNotFound) {
+                    inlineState.todoistBold.location = characterIndex - 1;
+                } else {
+                    // Detect the closing character of the strong element
+                    inlineState.todoistBold.length = characterIndex + 1 - inlineState.todoistBold.location;
+					commitAppearance = TRUE;
+                }
+            }
 		}
 		
 		
@@ -809,6 +822,12 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				
 				inlineState.strong = NSMakeRange(NSNotFound, 0);
 				inlineState.strongCharacter = 0;
+			} else if(inlineState.todoistBold.location != NSNotFound && inlineState.todoistBold.length) {
+				if(parseState.hasStrongAttributes) {
+					[*outResult addAttributes:[attributes strongAttributes] range:inlineState.todoistBold];
+				}
+				
+				inlineState.todoistBold = NSMakeRange(NSNotFound, 0);
 			} else if(inlineState.emphasis.location != NSNotFound && inlineState.emphasis.length) {
 				if(parseState.hasEmphasisAttributes) {
 					[*outResult addAttributes:[attributes emphasisAttributes] range:inlineState.emphasis];
@@ -816,6 +835,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				
 				inlineState.emphasis = NSMakeRange(NSNotFound, 0);
 				inlineState.emphasisCharacter = 0;
+				inlineState.strongCharacter = 0;
 			} else if(inlineState.inlineCode.location != NSNotFound && inlineState.inlineCode.length) {
 				if(parseState.hasInlineCodeAttributes) {
 					[*outResult addAttributes:[attributes inlineCodeAttributes] range:inlineState.inlineCode];

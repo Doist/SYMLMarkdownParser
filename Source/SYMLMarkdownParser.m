@@ -727,11 +727,10 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				labelRange.location += 1;
 				labelRange.length -= 2;
 				if(labelRange.length > 0) {
-					NSString *linkName = [inputString ajk_substringWithUntestedRange:labelRange];
+					NSString *linkTag = [inputString ajk_substringWithUntestedRange:labelRange];
 					
 					// the linkDefinition.length == 1 when parsing [tag]: url "title" style links
-					NSString *elementType = (inlineState.linkDefinition.length == 1) ? SYMLTextLinkTagElement : SYMLTextLinkNameElement;
-					[*outResult markSectionAsElement:elementType withContent:linkName range:labelRange];
+					[*outResult markSectionAsElement:SYMLTextLinkTagElement withContent:linkTag range:labelRange];
 					
 					if(parseState.hasLinkTagAttributes) {
 						[*outResult addAttributes:[attributes linkTagAttributes] range:labelRange];

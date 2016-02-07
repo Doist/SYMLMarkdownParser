@@ -41,7 +41,7 @@ struct SYMLMarkdownParserState {
 	
 	// Existing Todoist elements
 	BOOL shouldParseDoubleExclamationMarksAsStrong;
-	BOOL shouldParseTodoistStyleLinks;
+	BOOL shouldParseTodoistReferences;
 	
 	// Used internally to keep track of the parsing
 	NSInteger textLength;
@@ -62,6 +62,7 @@ struct SYMLMarkdownParserState {
 	BOOL hasLinkTagAttributes;
 	BOOL hasLinkURLAttributes;
 	BOOL hasInvalidLinkAttributes;
+    BOOL hasTodoistReferenceAttributes;
 	
 	// The state that is passed on from state to state
 	SYMLMarkdownParserLineType previousLineType;

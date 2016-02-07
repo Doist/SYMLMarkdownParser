@@ -76,7 +76,7 @@ SYMLMarkdownParserState TodoistBlockElementsMarkdownParserState() {
 	
 	// Todoist specific
 	parseState.shouldParseDoubleExclamationMarksAsStrong = TRUE;
-	parseState.shouldParseTodoistStyleLinks = TRUE;
+	parseState.shouldParseTodoistReferences = TRUE;
 	
 	// Avoid parsing HTML elements
 	parseState.shouldParseHTMLTags = FALSE;
@@ -123,7 +123,7 @@ BOOL SYMLMarkdownParserStateInitialConditionsAreEqual(SYMLMarkdownParserState fi
 	
 					// Compare Todoist specific syntax flags
 					firstState.shouldParseDoubleExclamationMarksAsStrong == secondState.shouldParseDoubleExclamationMarksAsStrong &&
-					firstState.shouldParseTodoistStyleLinks == secondState.shouldParseTodoistStyleLinks;
+					firstState.shouldParseTodoistReferences == secondState.shouldParseTodoistReferences;
 
 	
 	return isEqual;
@@ -144,7 +144,9 @@ SYMLMarkdownParserInlineState SYMLInitialParserInlineState()
 	inlineState.strong = notFoundRange;
 	inlineState.inlineCode = notFoundRange;
 	inlineState.htmlElement = notFoundRange;
+    
 	inlineState.todoistBold = notFoundRange;
+	inlineState.todoistReference = notFoundRange;
     
 	inlineState.precedingCharacter = 0;
 	inlineState.characterBeforePrecedingCharacterIsWhitespace = FALSE;
@@ -186,6 +188,7 @@ SYMLMarkdownParserState SYMLParseMarkdown(NSString *inputString,
 	parseState.hasLinkTagAttributes = [attributes respondsToSelector:@selector(linkTagAttributes)];
 	parseState.hasLinkURLAttributes = [attributes respondsToSelector:@selector(urlAttributes)];
 	parseState.hasInvalidLinkAttributes = [attributes respondsToSelector:@selector(invalidLinkAttributes)];
+	parseState.hasTodoistReferenceAttributes = [attributes respondsToSelector:@selector(todoistReferenceAttributes)];
 	
 	return parseMarkdownBlockRecursively(inputString, outResult, parseState, attributes, &increment);
 };
@@ -635,7 +638,6 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					// Detect the closing character of an emphasis element
 					inlineState.emphasis.length = characterIndex + 1 - inlineState.emphasis.location;
 				}
-				
 			} else if(isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) {
 				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
 				if(characterIndex - 1 == inlineState.emphasis.location) {
@@ -665,6 +667,19 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
                     inlineState.todoistBold.length = characterIndex + 1 - inlineState.todoistBold.location;
 					commitAppearance = TRUE;
                 }
+            }
+		}
+        
+        
+        // Parse the outline of the various Todoist [[link=linkID]] style references
+        // leave the actual filtering to a future pass
+        if(parseState.shouldParseTodoistReferences) {
+            if(currentCharacter == '[' && inlineState.precedingCharacter == '[' && inlineState.todoistReference.location == NSNotFound) {
+                inlineState.todoistReference.location = characterIndex - 1;
+            } else if(currentCharacter == ']' && inlineState.precedingCharacter == ']' && inlineState.todoistReference.location != NSNotFound) {
+                // Detect the closing characters of the content link element
+                inlineState.todoistReference.length = characterIndex + 1 - inlineState.todoistReference.location;
+                commitAppearance = TRUE;
             }
 		}
 		
@@ -813,7 +828,12 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				inlineState.linkDefinitionCharacter = 0;
 				inlineState.linkURL = notFoundRange;
 				inlineState.linkTitle = notFoundRange;
-																			
+			} else if(inlineState.todoistReference.location != NSNotFound && inlineState.todoistReference.length) {
+				if(parseState.hasTodoistReferenceAttributes) {
+					[*outResult addAttributes:[attributes todoistReferenceAttributes] range:inlineState.todoistReference];
+				}
+				
+				inlineState.todoistReference = NSMakeRange(NSNotFound, 0);
 			} else if(inlineState.strong.location != NSNotFound && inlineState.strong.length) {
 				if(parseState.hasStrongAttributes) {
 					[*outResult addAttributes:[attributes strongAttributes] range:inlineState.strong];

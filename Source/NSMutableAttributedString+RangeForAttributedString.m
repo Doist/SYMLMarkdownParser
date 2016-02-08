@@ -22,5 +22,9 @@ NSString * const SYMLAttributedStringAssociatedElementCollection = @"SYMLAttribu
 {
 }
 
+- (void)markSectionAsElement:(NSString *)elementKey withContent:(id)content contentRange:(NSRange)contentRange enclosingRange:(NSRange)range
+{
+}
+
 
 @end

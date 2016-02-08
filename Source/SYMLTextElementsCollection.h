@@ -26,6 +26,7 @@
 - (void)addAttribute:(NSString *)name value:(id)value range:(NSRange)range;
 
 - (void)markSectionAsElement:(NSString *)elementKey withContent:(id)content range:(NSRange)range;
+- (void)markSectionAsElement:(NSString *)elementKey withContent:(id)content contentRange:(NSRange)contentRange enclosingRange:(NSRange)enclosingRange;
 
 @property (assign) NSInteger offset;
 

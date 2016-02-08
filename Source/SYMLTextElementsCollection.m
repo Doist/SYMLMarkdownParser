@@ -81,6 +81,12 @@
 
 - (void)markSectionAsElement:(NSString *)elementKey withContent:(id)content range:(NSRange)range
 {
+    [self markSectionAsElement:elementKey withContent:content contentRange:NSMakeRange(NSNotFound, 0) enclosingRange:range];
+}
+
+
+- (void)markSectionAsElement:(NSString *)elementKey withContent:(id)content contentRange:(NSRange)contentRange enclosingRange:(NSRange)enclosingRange
+{
 	if(![elementKey length]) {
 		NSLog(@"-markSectionAsElement:withContent:range: requires an elementKey");
 		return;
@@ -95,7 +101,7 @@
 		BOOL foundExistingLink = FALSE;
 		
 		for(SYMLTextElement *element in [self.elements reverseObjectEnumerator]) {
-			if([element.type isEqualToString:SYMLTextLinkElement] && NSIntersectionRange(element.range, range).length != 0) {
+			if([element.type isEqualToString:SYMLTextLinkElement] && NSIntersectionRange(element.range, enclosingRange).length != 0) {
 				
 				if([content isKindOfClass:[NSString class]]) {
 					if(isLinkNameElement) {
@@ -110,7 +116,7 @@
 				}
 				
 				// Expand the range of the element
-				element.range = NSUnionRange(element.range, range);
+				element.range = NSUnionRange(element.range, enclosingRange);
 				
 				foundExistingLink = TRUE;
 				break;
@@ -118,7 +124,7 @@
 		}
 		
 		if(!foundExistingLink && isLinkURLElement) {
-			SYMLTextElement *element = [SYMLTextElement elementForURL:content withRange:range];
+			SYMLTextElement *element = [SYMLTextElement elementForURL:content withRange:enclosingRange];
 			
 			if(element) {
 				[self.elements addObject:element];
@@ -128,7 +134,7 @@
 		// Add the element to the array
 		SYMLTextElement *element = [[SYMLTextElement alloc] init];
 		element.type = elementKey;
-		element.range = range;
+		element.range = enclosingRange;
 		element.content = content;
 		
 		elementIndex = element.range.location;

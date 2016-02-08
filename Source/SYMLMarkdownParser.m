@@ -761,7 +761,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 						label = [[label lowercaseString] stringByTrimmingCharactersInSet:whitespaceCharacterSet];
 						
 						if([label length]) {
-							[*outResult markSectionAsElement:SYMLTextLinkTagElement withContent:label range:labelRange];
+                            [*outResult markSectionAsElement:SYMLTextLinkTagElement withContent:label contentRange:labelRange enclosingRange:labelRange];
 						}
 					}
 				}
@@ -816,7 +816,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					titleRange.location += 1;
 					
 					NSString *linkTitle = [inputString ajk_substringWithUntestedRange:titleRange];
-					[*outResult markSectionAsElement:SYMLTextLinkNameElement withContent:linkTitle range:NSUnionRange(inlineState.linkDefinition, inlineState.linkTitle)];
+                    [*outResult markSectionAsElement:SYMLTextLinkNameElement withContent:linkTitle contentRange:titleRange enclosingRange:NSUnionRange(inlineState.linkDefinition, inlineState.linkTitle)];
 				}
 				
 				

@@ -67,6 +67,8 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	parseState.shouldParseInlineCode = TRUE;
 	parseState.shouldParseHTMLTags = TRUE;
 	
+    parseState.allowFuzzierMatchingOfStrongAndEmphasisElements = FALSE;
+    
 	return parseState;
 }
 
@@ -80,7 +82,8 @@ SYMLMarkdownParserState TodoistBlockElementsMarkdownParserState() {
 	
 	// Avoid parsing HTML elements
 	parseState.shouldParseHTMLTags = FALSE;
-
+	parseState.allowFuzzierMatchingOfStrongAndEmphasisElements = TRUE;
+    
 	return parseState;
 }
 
@@ -619,7 +622,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 							inlineState.emphasis.location = NSNotFound;
 							inlineState.emphasisCharacter = 0;
 						}
-					} else if(currentCharacter == inlineState.strongCharacter && !inlineState.characterBeforePrecedingCharacterIsWhitespace) {
+					} else if(currentCharacter == inlineState.strongCharacter && (!inlineState.characterBeforePrecedingCharacterIsWhitespace || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
 						// Detect the closing character of a strong element
 						inlineState.strong.length = characterIndex + 1 - inlineState.strong.location;
 					}
@@ -629,21 +632,21 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					
 				} else if(inlineState.emphasis.location == NSNotFound) {
 					// Detect the start of a potential emphasis element
-					if(!inlineState.precedingCharacter || precedingCharacterIsWhitespace) {
+					if(!inlineState.precedingCharacter || (precedingCharacterIsWhitespace) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
 						inlineState.emphasis.location = characterIndex;
 						inlineState.emphasisCharacter = currentCharacter;
 					}
 					
-				} else if(currentCharacter == inlineState.emphasisCharacter && !precedingCharacterIsWhitespace) {
+				} else if(currentCharacter == inlineState.emphasisCharacter && (!precedingCharacterIsWhitespace || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
 					// Detect the closing character of an emphasis element
 					inlineState.emphasis.length = characterIndex + 1 - inlineState.emphasis.location;
 				}
-			} else if(isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) {
+			} else if(isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
 				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
-				if(characterIndex - 1 == inlineState.emphasis.location) {
+				if(characterIndex - 1 == inlineState.emphasis.location && !parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
 					inlineState.emphasis.location = NSNotFound;
 					inlineState.emphasisCharacter = 0;
-				} else if(characterIndex - 2 == inlineState.strong.location) {
+				} else if(characterIndex - 2 == inlineState.strong.location && !parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
 					inlineState.strong.location = NSNotFound;
 					inlineState.strongCharacter = 0;
 				} else {

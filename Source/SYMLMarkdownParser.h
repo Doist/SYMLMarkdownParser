@@ -39,6 +39,9 @@ struct SYMLMarkdownParserState {
 	BOOL shouldParseInlineCode;
 	BOOL shouldParseHTMLTags;
 	
+    // Configuration
+    BOOL allowFuzzierMatchingOfStrongAndEmphasisElements;
+    
 	// Existing Todoist elements
 	BOOL shouldParseDoubleExclamationMarksAsStrong;
 	BOOL shouldParseTodoistReferences;

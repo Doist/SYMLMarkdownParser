@@ -28,6 +28,7 @@ class TodoistSyntaxTests: XCTestCase {
 		XCTAssertEqual(numberOfElementsOfType("strong", input, parserConfiguration), 3, "Test both standard and Todosit style strong elements are matched")
 	}
     
+    
 	func testDoubleExclimationMarkAsBoldWithSpaces() {
 		let parserConfiguration = TodoistInlineMarkdownParserState()
 		let input1 = "sometimes the !! exclimation marks !! have spaces around them";
@@ -41,6 +42,25 @@ class TodoistSyntaxTests: XCTestCase {
         let input3 = "Text with !! strong text !! defined by !! two exclamation !! marks padded with spaces"
         matchElementsOfType("strong", input3, parserConfiguration, ["!! strong text !!", "!! two exclamation !!"])
 	}
+    
+    
+    func testStrongElementsWithSpaces() {
+		let parserConfiguration = TodoistInlineMarkdownParserState()
+        var inputText = "**Jordi La Forge **";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a trailing space")
+
+        inputText = "** Jordi La Forge**";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a leading space")
+        
+        inputText = "**?Jordi La Forge**";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a leading space")
+        
+        inputText = "**Jordi La Forge**a";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a leading space")
+        
+        inputText = "**Jordi La Forge** joined project **?[blog post] How to prioritize the things that truly matter**a";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 2, "Test that strong elements can be padded with spaces")
+    }
     
     
     

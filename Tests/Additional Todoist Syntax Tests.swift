@@ -66,19 +66,22 @@ class TodoistSyntaxTests: XCTestCase {
     
     
         
-    func testTodoistStrongElementsWithSpaces() {
+    func testTodoistStrongElements() {
 		let parserConfiguration = TodoistInlineMarkdownParserState()
-        let input = "!! Jordi La Forge !!";
-		XCTAssertEqual(numberOfElementsOfType("strong", input, parserConfiguration), 1, "Test that strong elements with a trailing space")
+        let input1 = "!!Jordi La Forge!!";
+		XCTAssertEqual(numberOfElementsOfType("strong", input1, parserConfiguration), 1, "Test that strong elements with a trailing space")
+        
+        let input2 = "!! Jordi La Forge !!";
+		XCTAssertEqual(numberOfElementsOfType("strong", input2, parserConfiguration), 1, "Test that strong elements with a trailing space")
     }
     
     
-    func testTodoistStrongElementsWithSpacesOther() {
+    func testPatternsThatArentQuiteStrongTodoistElements() {
         let allowsFuzzyMatchingOfStrongAndEmphasis = 0
 		let parserConfiguration = TodoistInlineMarkdownParserState()
         
-        var inputText = "Star Trek is !! way !! !!better!! than Star Wars";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 2, "Test that strong elements with a leading space")
+        var inputText = "Star Trek is !! way!! !!better than Star Wars";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")
         
         inputText = "But then Han is !! better!! than Kirk?";
 		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")

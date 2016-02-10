@@ -26,7 +26,7 @@
 	NSString *exampleText = [NSString stringWithContentsOfURL:exampleDocumentURL  usedEncoding:NULL error:NULL];
 	
 	self.textView.string = exampleText;
-	[self applySyntaxHighlighting];
+//	[self applySyntaxHighlighting];
 }
 
 

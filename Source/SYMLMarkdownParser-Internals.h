@@ -26,6 +26,8 @@ struct SYMLMarkdownParserInlineState {
 	unichar strongCharacter;			// either * or _
 
 	NSRange todoistBold;                // !!
+	BOOL todoistBoldIsPaddedWithASpace;
+    
 	NSRange todoistReference;         // [[link: linkID]]
     
 	NSRange inlineCode;					// either `

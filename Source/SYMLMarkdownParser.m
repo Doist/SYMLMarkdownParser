@@ -68,6 +68,7 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	parseState.shouldParseHTMLTags = TRUE;
 	
     parseState.allowFuzzierMatchingOfStrongAndEmphasisElements = FALSE;
+    parseState.allowSpacesWhenMatchingTodoistBoldElements = FALSE;
     
 	return parseState;
 }
@@ -99,6 +100,7 @@ SYMLMarkdownParserState TodoistInlineMarkdownParserState() {
 	
 	// And of inline code elements
 	parseState.shouldParseInlineCode = FALSE;
+    parseState.allowSpacesWhenMatchingTodoistBoldElements = TRUE;
 
 	return parseState;
 }
@@ -666,14 +668,26 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
                 if(inlineState.todoistBold.location == NSNotFound) {
                     if(characterIndex == 1 || inlineState.characterBeforePrecedingCharacterIsWhitespace) {
                         inlineState.todoistBold.location = characterIndex - 1;
+                        inlineState.todoistBoldIsPaddedWithASpace = FALSE;
                     }
                 } else {
                     // Detect the closing character of the strong element
                     inlineState.todoistBold.length = characterIndex + 1 - inlineState.todoistBold.location;
                 }
-            } else if((inlineState.todoistBold.location != NSNotFound)
+            } else if((inlineState.todoistBold.location == characterIndex - 2) && currentCharacter == ' ' && parseState.allowSpacesWhenMatchingTodoistBoldElements) {
+                inlineState.todoistBoldIsPaddedWithASpace = TRUE;
+            } else if((inlineState.todoistBold.location != NSNotFound && inlineState.todoistBold.length > 0)
                 && (isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter])) {
-                commitAppearance = TRUE;
+                if((inlineState.todoistBold.location - characterIndex) > 4) {
+                    unichar possibleWhitespaceCharacter = [inputString characterAtIndex:characterIndex - 3];
+                    
+                    if((possibleWhitespaceCharacter == ' ') == inlineState.todoistBoldIsPaddedWithASpace) {
+                        commitAppearance = TRUE;
+                    } else {
+                        // Require a space padding inside the !! characters to complete the element
+                        inlineState.todoistBold.length = 0;
+                    }
+                }
             } else {
                 // Require a trailing space after the !! characters to complete the element
                 inlineState.todoistBold.length = 0;

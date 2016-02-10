@@ -41,6 +41,7 @@ struct SYMLMarkdownParserState {
 	
     // Configuration
     BOOL allowFuzzierMatchingOfStrongAndEmphasisElements;
+    BOOL allowSpacesWhenMatchingTodoistBoldElements;
     
 	// Existing Todoist elements
 	BOOL shouldParseDoubleExclamationMarksAsStrong;

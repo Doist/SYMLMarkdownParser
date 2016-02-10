@@ -640,7 +640,8 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					// Detect the closing character of an emphasis element
 					inlineState.emphasis.length = characterIndex + 1 - inlineState.emphasis.location;
 				}
-			} else if(isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
+			} else if((inlineState.strong.location != NSNotFound || inlineState.emphasis.location != NSNotFound)
+                    && (isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
 				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
 				if(characterIndex - 1 == inlineState.emphasis.location && !parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
 					inlineState.emphasis.location = NSNotFound;
@@ -663,12 +664,19 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
         if(parseState.shouldParseDoubleExclamationMarksAsStrong) {
             if(currentCharacter == '!' && inlineState.precedingCharacter == '!') {
                 if(inlineState.todoistBold.location == NSNotFound) {
-                    inlineState.todoistBold.location = characterIndex - 1;
+                    if(characterIndex == 1 || inlineState.characterBeforePrecedingCharacterIsWhitespace) {
+                        inlineState.todoistBold.location = characterIndex - 1;
+                    }
                 } else {
                     // Detect the closing character of the strong element
                     inlineState.todoistBold.length = characterIndex + 1 - inlineState.todoistBold.location;
-					commitAppearance = TRUE;
                 }
+            } else if((inlineState.todoistBold.location != NSNotFound)
+                && (isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter])) {
+                commitAppearance = TRUE;
+            } else {
+                // Require a trailing space after the !! characters to complete the element
+                inlineState.todoistBold.length = 0;
             }
 		}
         

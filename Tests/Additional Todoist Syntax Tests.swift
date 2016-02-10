@@ -45,22 +45,60 @@ class TodoistSyntaxTests: XCTestCase {
     
     
     func testStrongElementsWithSpaces() {
+        let allowsFuzzyMatchingOfStrongAndEmphasis = 0
+        
 		let parserConfiguration = TodoistInlineMarkdownParserState()
         var inputText = "**Jordi La Forge **";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a trailing space")
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements with a trailing space")
 
         inputText = "** Jordi La Forge**";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a leading space")
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements with a leading space")
         
         inputText = "**?Jordi La Forge**";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a leading space")
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements with a leading space")
         
         inputText = "**Jordi La Forge**a";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements with a leading space")
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")
         
         inputText = "**Jordi La Forge** joined project **?[blog post] How to prioritize the things that truly matter**a";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 2, "Test that strong elements can be padded with spaces")
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1 + allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements can be padded with spaces")
     }
+    
+    
+        
+    func testTodoistStrongElementsWithSpaces() {
+		let parserConfiguration = TodoistInlineMarkdownParserState()
+        let input = "!! Jordi La Forge !!";
+		XCTAssertEqual(numberOfElementsOfType("strong", input, parserConfiguration), 1, "Test that strong elements with a trailing space")
+    }
+    
+    
+    func testTodoistStrongElementsWithSpacesOther() {
+        let allowsFuzzyMatchingOfStrongAndEmphasis = 0
+		let parserConfiguration = TodoistInlineMarkdownParserState()
+        
+        var inputText = "Star Trek is !! way !! !!better!! than Star Wars";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 2, "Test that strong elements with a leading space")
+        
+        inputText = "But then Han is !! better!! than Kirk?";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")
+        
+        inputText = "But then Picard is !!better !! than Luke";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements with a leading space")
+        
+        inputText = "KKhhAAAAAANNNN!!!!";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements can be padded with spaces")
+        
+        inputText = "Strong opinions!!loosely!! held";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")
+    }
+    
+    func testTodoistElementsWithoutSpacesArentMatched() {
+		let parserConfiguration = TodoistInlineMarkdownParserState()
+        let inputText = "Hold your opinions !!above!!your head";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")
+    }
+
     
     
     

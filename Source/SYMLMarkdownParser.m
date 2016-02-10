@@ -82,7 +82,6 @@ SYMLMarkdownParserState TodoistBlockElementsMarkdownParserState() {
 	
 	// Avoid parsing HTML elements
 	parseState.shouldParseHTMLTags = FALSE;
-	parseState.allowFuzzierMatchingOfStrongAndEmphasisElements = TRUE;
     
 	return parseState;
 }

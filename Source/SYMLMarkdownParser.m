@@ -100,6 +100,7 @@ SYMLMarkdownParserState TodoistInlineMarkdownParserState() {
 	
 	// And of inline code elements
 	parseState.shouldParseInlineCode = FALSE;
+    parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation = TRUE;
     parseState.allowSpacesWhenMatchingTodoistBoldElements = TRUE;
 
 	return parseState;
@@ -645,10 +646,12 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 			} else if((inlineState.strong.location != NSNotFound || inlineState.emphasis.location != NSNotFound)
                     && (isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
 				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
-				if(characterIndex - 1 == inlineState.emphasis.location && !parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
+                BOOL isPunctuation = [punctuationCharacterSet characterIsMember:currentCharacter];
+                        
+				if(characterIndex - 1 == inlineState.emphasis.location && (!parseState.allowFuzzierMatchingOfStrongAndEmphasisElements || (!isPunctuation || !parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation))) {
 					inlineState.emphasis.location = NSNotFound;
 					inlineState.emphasisCharacter = 0;
-				} else if(characterIndex - 2 == inlineState.strong.location && !parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
+				} else if(characterIndex - 2 == inlineState.strong.location && (!parseState.allowFuzzierMatchingOfStrongAndEmphasisElements && (!isPunctuation || !parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation))) {
 					inlineState.strong.location = NSNotFound;
 					inlineState.strongCharacter = 0;
 				} else {

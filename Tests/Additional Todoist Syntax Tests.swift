@@ -54,8 +54,8 @@ class TodoistSyntaxTests: XCTestCase {
         inputText = "** Jordi La Forge**";
 		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements with a leading space")
         
-        inputText = "**?Jordi La Forge**";
-		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), allowsFuzzyMatchingOfStrongAndEmphasis, "Test that strong elements with a leading space")
+        inputText = "**?Jordi La Forge?**";
+		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 1, "Test that strong elements padded with puntuation marks")
         
         inputText = "**Jordi La Forge**a";
 		XCTAssertEqual(numberOfElementsOfType("strong", inputText, parserConfiguration), 0, "Test that strong elements with a leading space")

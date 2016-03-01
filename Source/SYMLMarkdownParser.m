@@ -644,7 +644,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					inlineState.emphasis.length = characterIndex + 1 - inlineState.emphasis.location;
 				}
 			} else if((inlineState.strong.location != NSNotFound || inlineState.emphasis.location != NSNotFound)
-                    && (isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter] || [punctuationCharacterSet characterIsMember:currentCharacter]) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
+                    && (isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter]) {
 				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
                 BOOL isPunctuation = [punctuationCharacterSet characterIsMember:currentCharacter];
                         

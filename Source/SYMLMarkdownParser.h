@@ -38,7 +38,8 @@ struct SYMLMarkdownParserState {
 	BOOL shouldParseEmphasisAndStrongTags;
 	BOOL shouldParseInlineCode;
 	BOOL shouldParseHTMLTags;
-	
+    BOOL shouldParseTrailingLinks;
+    
     // Configuration
     BOOL allowFuzzierMatchingOfStrongAndEmphasisElements;
     BOOL allowStrongAndEmphasisElementsPaddedWithPunctuation;

@@ -66,6 +66,7 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	parseState.shouldParseEmphasisAndStrongTags = TRUE;
 	parseState.shouldParseInlineCode = TRUE;
 	parseState.shouldParseHTMLTags = TRUE;
+    parseState.shouldParseTrailingLinks = TRUE;
 	
     parseState.allowFuzzierMatchingOfStrongAndEmphasisElements = FALSE;
     parseState.allowSpacesWhenMatchingTodoistBoldElements = FALSE;
@@ -97,11 +98,12 @@ SYMLMarkdownParserState TodoistInlineMarkdownParserState() {
 	parseState.shouldParseBlockcode = FALSE;
 	parseState.shouldParseHorizontalRule = FALSE;
 	parseState.shouldParseLists = FALSE;
-	
+    
 	// And of inline code elements
 	parseState.shouldParseInlineCode = FALSE;
     parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation = TRUE;
     parseState.allowSpacesWhenMatchingTodoistBoldElements = TRUE;
+    parseState.shouldParseTrailingLinks = FALSE;
 
 	return parseState;
 }
@@ -546,13 +548,13 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 				inlineState.linkLabel.length = characterIndex - inlineState.linkLabel.location;
 				
 				if(inlineState.linkDefinition.location == NSNotFound
-						&& (currentCharacter == '[' || currentCharacter == ':' || currentCharacter == '(')) {
+						&& (currentCharacter == '[' || (parseState.shouldParseTrailingLinks && currentCharacter == ':') || currentCharacter == '(')) {
 					
 					// Start the link element
 					inlineState.linkDefinition.location = characterIndex;
 					inlineState.linkDefinitionCharacter = currentCharacter;
 					
-					if(currentCharacter == ':') {
+					if(parseState.shouldParseTrailingLinks && currentCharacter == ':') {
 						// [id]: style elements extend to the end of the current line
 						inlineState.linkDefinition.length = 1;
 						
@@ -640,11 +642,11 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					}
 					
 				} else if(currentCharacter == inlineState.emphasisCharacter && (!precedingCharacterIsWhitespace || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
-					// Detect the closing character of an emphasis element
+					// Detect the closing character of' an emphasis element
 					inlineState.emphasis.length = characterIndex + 1 - inlineState.emphasis.location;
 				}
 			} else if((inlineState.strong.location != NSNotFound || inlineState.emphasis.location != NSNotFound)
-                    && (isNewline || ([whitespaceCharacterSet characterIsMember:currentCharacter]) {
+                    && (isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter])) {
 				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
                 BOOL isPunctuation = [punctuationCharacterSet characterIsMember:currentCharacter];
                         

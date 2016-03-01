@@ -64,7 +64,6 @@ class Markdown_Parser_Tests: XCTestCase {
 		XCTAssertEqual(numberOfElementsOfType("inlineCode", text, parserConfiguration), 2, "Test that both inline code elements are matched")
 	}
 
-
 	
 	
 //	func testConformanceToCommonMark() {

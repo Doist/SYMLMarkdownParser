@@ -103,6 +103,15 @@ class TodoistSyntaxTests: XCTestCase {
     }
 
     
+    func testTodoistIgnoresTrailingLinkElement() {
+        var parserConfiguration = SYMLDefaultMarkdownParserState()
+        var input1 = "[D2]: test";
+        XCTAssertEqual(numberOfElementsOfType("link", input1, parserConfiguration), 2, "Test that trailing link is parsed using default options")
+        
+        parserConfiguration = TodoistInlineMarkdownParserState()
+        input1 = "[D2]: test";
+        XCTAssertEqual(numberOfElementsOfType("linkTitle", input1, parserConfiguration), 0, "but not using Todoist options")
+    }
     
     
     func matchElementsOfType(elementKey: String, _ text: String, _ parserConfiguration: SYMLMarkdownParserState, _ expectedSubstrings: [String]) -> Bool {

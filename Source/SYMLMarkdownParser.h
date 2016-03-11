@@ -41,7 +41,6 @@ struct SYMLMarkdownParserState {
     BOOL shouldParseTrailingLinks;
     
     // Configuration
-    BOOL allowFuzzierMatchingOfStrongAndEmphasisElements;
     BOOL allowStrongAndEmphasisElementsPaddedWithPunctuation;
     BOOL allowSpacesWhenMatchingTodoistBoldElements;
     
@@ -79,8 +78,9 @@ typedef struct SYMLMarkdownParserState SYMLMarkdownParserState;
 
 SYMLMarkdownParserState SYMLDefaultMarkdownParserState();
 
-SYMLMarkdownParserState TodoistInlineMarkdownParserState();
 SYMLMarkdownParserState TodoistBlockElementsMarkdownParserState();
+SYMLMarkdownParserState TodoistInlineMarkdownParserState();
+SYMLMarkdownParserState TodoistHeadingMarkdownParserState();
 
 BOOL SYMLMarkdownParserStateInitialConditionsAreEqual(SYMLMarkdownParserState firstState, SYMLMarkdownParserState secondState);
 

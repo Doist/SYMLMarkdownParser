@@ -68,7 +68,6 @@ SYMLMarkdownParserState SYMLDefaultMarkdownParserState()
 	parseState.shouldParseHTMLTags = TRUE;
     parseState.shouldParseTrailingLinks = TRUE;
 	
-    parseState.allowFuzzierMatchingOfStrongAndEmphasisElements = FALSE;
     parseState.allowSpacesWhenMatchingTodoistBoldElements = FALSE;
     
 	return parseState;
@@ -106,6 +105,24 @@ SYMLMarkdownParserState TodoistInlineMarkdownParserState() {
     parseState.shouldParseTrailingLinks = FALSE;
 
 	return parseState;
+}
+
+
+SYMLMarkdownParserState TodoistHeadingMarkdownParserState() {
+    SYMLMarkdownParserState parseState = TodoistInlineMarkdownParserState();
+    
+    // Disable parsing of elements other than strong and emphasis
+    parseState.shouldParseLinks = FALSE;
+    parseState.shouldParseInlineCode = FALSE;
+    parseState.shouldParseHTMLTags = FALSE;
+    parseState.shouldParseTrailingLinks = FALSE;
+    parseState.shouldParseEmphasisAndStrongTags = TRUE;
+    
+    parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation = TRUE;
+    parseState.allowSpacesWhenMatchingTodoistBoldElements = TRUE;
+    parseState.shouldParseTrailingLinks = FALSE;
+    
+    return parseState;
 }
 
 
@@ -626,7 +643,7 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 							inlineState.emphasis.location = NSNotFound;
 							inlineState.emphasisCharacter = 0;
 						}
-					} else if(currentCharacter == inlineState.strongCharacter && (!inlineState.characterBeforePrecedingCharacterIsWhitespace || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
+					} else if(currentCharacter == inlineState.strongCharacter && (!inlineState.characterBeforePrecedingCharacterIsWhitespace)) {
 						// Detect the closing character of a strong element
 						inlineState.strong.length = characterIndex + 1 - inlineState.strong.location;
 					}
@@ -636,34 +653,38 @@ BOOL SYMLParseParagraph(NSString *inputString, id <SYMLAttributedObjectCollectio
 					
 				} else if(inlineState.emphasis.location == NSNotFound) {
 					// Detect the start of a potential emphasis element
-					if(!inlineState.precedingCharacter || (precedingCharacterIsWhitespace) || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements) {
+					if(!inlineState.precedingCharacter || (precedingCharacterIsWhitespace)) {
 						inlineState.emphasis.location = characterIndex;
 						inlineState.emphasisCharacter = currentCharacter;
 					}
 					
-				} else if(currentCharacter == inlineState.emphasisCharacter && (!precedingCharacterIsWhitespace || parseState.allowFuzzierMatchingOfStrongAndEmphasisElements)) {
-					// Detect the closing character of' an emphasis element
+				} else if(currentCharacter == inlineState.emphasisCharacter && !precedingCharacterIsWhitespace) {
+					// Detect the closing character of an emphasis element
 					inlineState.emphasis.length = characterIndex + 1 - inlineState.emphasis.location;
 				}
-			} else if((inlineState.strong.location != NSNotFound || inlineState.emphasis.location != NSNotFound)
-                    && (isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter])) {
-				// Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
+            } else {
                 BOOL isPunctuation = [punctuationCharacterSet characterIsMember:currentCharacter];
-                        
-				if(characterIndex - 1 == inlineState.emphasis.location && (!parseState.allowFuzzierMatchingOfStrongAndEmphasisElements || (!isPunctuation || !parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation))) {
-					inlineState.emphasis.location = NSNotFound;
-					inlineState.emphasisCharacter = 0;
-				} else if(characterIndex - 2 == inlineState.strong.location && (!parseState.allowFuzzierMatchingOfStrongAndEmphasisElements && (!isPunctuation || !parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation))) {
-					inlineState.strong.location = NSNotFound;
-					inlineState.strongCharacter = 0;
-				} else {
-					commitAppearance = TRUE;
-				}
-			} else {
-				// Require a trailing space after an * or _ character to complete the element
-				inlineState.emphasis.length = 0;
-				inlineState.strong.length = 0;
-			}
+                
+                if((inlineState.strong.location != NSNotFound || inlineState.emphasis.location != NSNotFound)
+                        && (isNewline || [whitespaceCharacterSet characterIsMember:currentCharacter] || isPunctuation)) {
+                    // Reset the emphasis or strong element if the * or _ characters are followed by a whitespace
+                    if (!(isPunctuation && parseState.allowStrongAndEmphasisElementsPaddedWithPunctuation)) {
+                        if(characterIndex - 1 == inlineState.emphasis.location) {
+                            inlineState.emphasis.location = NSNotFound;
+                            inlineState.emphasisCharacter = 0;
+                        } else if(characterIndex - 2 == inlineState.strong.location) {
+                            inlineState.strong.location = NSNotFound;
+                            inlineState.strongCharacter = 0;
+                        } else {
+                            commitAppearance = TRUE;
+                        }
+                    }
+                } else {
+                    // Require a trailing space after an * or _ character to complete the element
+                    inlineState.emphasis.length = 0;
+                    inlineState.strong.length = 0;
+                }
+            }
         }
         
         
